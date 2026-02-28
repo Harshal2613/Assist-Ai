@@ -159,7 +159,7 @@ if len(st.session_state.messages) == 0:
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
-        st.caption(msg["time"])
+        
 
 # ---------------- CHAT INPUT ----------------
 user_input = st.chat_input("Ask your AI assistant anything...")
@@ -220,4 +220,5 @@ if user_input:
 
     with st.chat_message("assistant"):
         st.markdown(ai_reply)
+
         st.caption(current_time)
