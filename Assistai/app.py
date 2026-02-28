@@ -165,59 +165,23 @@ for msg in st.session_state.messages:
 user_input = st.chat_input("Ask your AI assistant anything...")
 
 # ---------------- SEND MESSAGE ----------------
-if user_input:
-
-    current_time = datetime.now().strftime("%H:%M")
-
-    st.session_state.messages.append({
-        "role": "user",
-        "content": user_input,
-        "time": current_time
-    })
-
+if user_message:
     with st.chat_message("user"):
-        st.markdown(user_input)
-        st.caption(current_time)
-
-    try:
-        with st.spinner("⚡ AI Engine Processing..."):
-
-            response = requests.post(
-                WEBHOOK_URL,
-                json={
-                    "message": user_input,
-                    "userId": "demo_user_1"
-                },
-                timeout=120
-            )
-
-            if response.status_code == 200:
-                data = response.json()
-
-                if isinstance(data, list) and "output" in data[0]:
-                    raw_output = data[0]["output"]
-                elif isinstance(data, dict) and "output" in data:
-                    raw_output = data["output"]
-                else:
-                    raw_output = str(data)
-
-                try:
-                    parsed = json.loads(raw_output)
-                    ai_reply = parsed.get("message", raw_output)
-                except:
-                    ai_reply = raw_output
-            else:
-                ai_reply = "❌ Assistant encountered an error."
-
-    except:
-        ai_reply = "⚠️ Unable to connect to AI engine."
-
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": ai_reply,
-        "time": current_time
-    })
-
+        st.markdown(user_message)
+        # append the user message to message history
+        st.session_state.messages.append({"role": "user", "content": user_message})
+    
+    # send the user message to the n8n webhook
+    response = requests.post(
+        "http://localhost:5678/webhook/6be4ae4d-ead7-4cb8-85fe-c2bb3bec1e91",  # replace with your n8n webhook URL
+        json={"message": user_message}
+    )
+    
+    # get the AI response from webhook
+    ai_response = response.json()[0]["output"]
+    
+    # display the AI response in chat
     with st.chat_message("assistant"):
-        st.markdown(ai_reply)
-        st.caption(current_time)
+        st.markdown(ai_response)
+        # append the AI response to message history
+        st.session_state.messages.append({"role": "assistant", "content": ai_response})
