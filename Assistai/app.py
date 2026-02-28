@@ -203,7 +203,7 @@ if user_input:
 
                 try:
                     parsed = json.loads(raw_output)
-                    ai_reply = parsed.get("message", raw_output)
+                    ai_reply = parsed.get("data", raw_output)
                 except:
                     ai_reply = raw_output
             else:
@@ -221,4 +221,5 @@ if user_input:
     with st.chat_message("assistant"):
         st.markdown(ai_reply)
         st.caption(current_time)
+
 
