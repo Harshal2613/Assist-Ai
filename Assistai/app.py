@@ -174,7 +174,7 @@ if user_message:
     
     # send the user message to the n8n webhook
     response = requests.post(
-        "http://localhost:5678/webhook/6be4ae4d-ead7-4cb8-85fe-c2bb3bec1e91",  # replace with your n8n webhook URL
+        "https://assistai-n8n-djqj.onrender.com/webhook/840ac786-78df-43ba-803b-9f8a1cdfa04d",  # replace with your n8n webhook URL
         json={"message": user_message}
     )
     
@@ -186,3 +186,4 @@ if user_message:
         st.markdown(ai_response)
         # append the AI response to message history
         st.session_state.messages.append({"role": "assistant", "content": ai_response})
+
