@@ -196,7 +196,7 @@ if user_input:
                 if isinstance(data, list) and "output" in data[0]:
                     raw_output = data[0]["output"]
                 elif isinstance(data, dict) and "output" in data:
-                    raw_output = data["output"]["message"]
+                    raw_output = data["output"]
                 else:
                     raw_output = str(data)
 
@@ -219,6 +219,7 @@ if user_input:
     with st.chat_message("assistant"):
         st.markdown(ai_reply)
         st.caption(current_time)
+
 
 
 
