@@ -172,7 +172,6 @@ if user_input:
     st.session_state.messages.append({
         "role": "user",
         "content": user_input,
-        "time": current_time
     })
 
     with st.chat_message("user"):
@@ -215,11 +214,11 @@ if user_input:
     st.session_state.messages.append({
         "role": "assistant",
         "content": ai_reply,
-        "time": current_time
     })
 
     with st.chat_message("assistant"):
         st.markdown(ai_reply)
         st.caption(current_time)
+
 
 
