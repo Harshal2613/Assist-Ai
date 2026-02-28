@@ -177,7 +177,7 @@ if user_input:
 
     with st.chat_message("user"):
         st.markdown(user_input)
-        st.caption(current_time)
+        
 
     try:
         with st.spinner("⚡ AI Engine Processing..."):
@@ -188,7 +188,7 @@ if user_input:
                     "message": user_input,
                     "userId": "demo_user_1"
                 },
-                timeout=60
+                timeout=120
             )
 
             if response.status_code == 200:
@@ -222,3 +222,4 @@ if user_input:
         st.markdown(ai_reply)
 
         st.caption(current_time)
+
